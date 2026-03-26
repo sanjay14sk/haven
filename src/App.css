@@ -1,38 +1,209 @@
-.App {
-  text-align: center;
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap');
+
+:root {
+  --primary-accent: #6c63ff;
+  --bg-gradient: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+  --glass-bg: rgba(255, 255, 255, 0.05);
+  --glass-border: rgba(255, 255, 255, 0.1);
+  --glass-shadow: rgba(0, 0, 0, 0.3);
+  --text-primary: #f0f0f0;
+  --text-secondary: rgba(255, 255, 255, 0.6);
+  --active-bg: rgba(255, 255, 255, 0.15);
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+* {
+  box-sizing: border-box;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+body {
+  margin: 0;
+  padding: 0;
+  height: 100vh;
   display: flex;
-  flex-direction: column;
   align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
+  background: var(--bg-gradient);
+  font-family: 'Outfit', -apple-system, sans-serif;
+  color: var(--text-primary);
+  overflow: hidden;
+}
+
+.app-container {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.glass-panel {
+  width: 90%;
+  max-width: 500px;
+  background: var(--glass-bg);
+  backdrop-filter: blur(15px);
+  border: 1px solid var(--glass-border);
+  border-radius: 20px;
+  padding: 2.5rem;
+  box-shadow: 0 15px 35px var(--glass-shadow);
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.header h1 {
+  margin: 0;
+  font-weight: 800;
+  letter-spacing: -0.5px;
+  font-size: 2rem;
+}
+
+.header h1 span {
+  color: var(--primary-accent);
+}
+
+.subtitle {
+  margin: 4px 0 0;
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+}
+
+.song-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+}
+
+.song-item {
+  display: flex;
+  align-items: center;
+  padding: 1rem;
+  background: transparent;
+  border-radius: 12px;
+  border: 1px solid transparent;
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  cursor: pointer;
+}
+
+.song-item:hover {
+  background: var(--active-bg);
+  transform: translateX(5px);
+}
+
+.song-item.active {
+  background: var(--active-bg);
+  border-color: var(--primary-accent);
+}
+
+.song-visual {
+  width: 45px;
+  height: 45px;
+  background: var(--primary-accent);
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2rem;
+  margin-right: 1rem;
+  flex-shrink: 0;
+  box-shadow: 0 5px 15px rgba(108, 99, 255, 0.3);
+}
+
+.song-meta {
+  flex-grow: 1;
+}
+
+.song-meta h3 {
+  margin: 0;
+  font-size: 1rem;
+  letter-spacing: 0.2px;
+}
+
+.song-meta p {
+  margin: 2px 0 0;
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+}
+
+.audio-toggle {
+  background: rgba(255, 255, 255, 0.1);
+  border: none;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
   color: white;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2rem;
+  transition: all 0.2s ease;
 }
 
-.App-link {
-  color: #61dafb;
+.audio-toggle:hover {
+  background: var(--primary-accent);
+  transform: scale(1.1);
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+/* Now Playing Widget */
+.now-playing {
+  margin-top: 1rem;
+  padding-top: 1.2rem;
+  border-top: 1px solid var(--glass-border);
+}
+
+.progress-bar {
+  height: 4px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 5px;
+  overflow: hidden;
+  margin-bottom: 0.8rem;
+}
+
+.progress-fill {
+  height: 100%;
+  background: var(--primary-accent);
+}
+
+.player-controls p {
+   margin: 0;
+   font-size: 0.8rem;
+   text-align: center;
+   color: var(--text-secondary);
+}
+
+.player-controls strong {
+  display: block;
+  color: var(--text-primary);
+  margin-top: 4px;
+}
+
+/* Shimmer Loader */
+.loader {
+  text-align: center;
+  padding: 2rem 0;
+  opacity: 0.6;
+}
+
+@keyframes shimmer {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+}
+
+.shimmer {
+  width: 100px;
+  height: 4px;
+  background: rgba(255, 255, 255, 0.1);
+  margin: 0 auto 10px;
+  position: relative;
+  overflow: hidden;
+  border-radius: 10px;
+}
+
+.shimmer::after {
+  content: "";
+  position: absolute;
+  top: 0; left: 0; width: 100%; height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  animation: shimmer 1.5s infinite;
 }
